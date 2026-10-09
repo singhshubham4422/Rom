@@ -70,12 +70,19 @@ export const App: React.FC = () => {
     startPreloading();
   }, [startPreloading]);
 
+  // Reset scroll to top on every page transition
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [currentStep]);
+
   const handleRestart = () => {
     setCurrentStep('page_1_opening');
   };
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-0 sm:p-4 md:p-6 bg-gradient-to-br from-rose-100/90 via-pink-50 to-rose-200/80 relative overflow-x-hidden">
+    <div className="h-[100dvh] w-full flex flex-col items-center justify-start sm:justify-center p-0 sm:p-4 md:p-6 bg-gradient-to-br from-rose-100/90 via-pink-50 to-rose-200/80 relative overflow-hidden">
       
       {/* Background ambient floating hearts */}
       <FloatingHearts />
@@ -87,8 +94,8 @@ export const App: React.FC = () => {
           onRetry={startPreloading}
         />
       ) : (
-        /* Main Mobile Container Card */
-        <main className="w-full max-w-md min-h-[100dvh] sm:min-h-[820px] sm:max-h-[92vh] sm:rounded-[2.5rem] glass-card flex flex-col justify-between relative shadow-2xl border-0 sm:border sm:border-rose-200/80 overflow-hidden z-10">
+        /* Main Mobile Container Card - fits 100dvh on mobile with pinned header and fixed bottom actions */
+        <main className="w-full max-w-md h-[100dvh] sm:h-[840px] sm:max-h-[92vh] sm:my-auto sm:rounded-[2.5rem] glass-card flex flex-col justify-between relative shadow-2xl border-0 sm:border sm:border-rose-200/80 overflow-hidden z-10">
           
           {/* Header Bar */}
           <Header
@@ -97,7 +104,7 @@ export const App: React.FC = () => {
           />
 
           {/* Animated Page Transitions */}
-          <div className="flex-1 w-full flex flex-col justify-center relative overflow-hidden">
+          <div className="flex-1 w-full min-h-0 flex flex-col overflow-hidden relative">
             <AnimatePresence mode="wait">
               {currentStep === 'page_1_opening' && (
                 <motion.div
@@ -105,8 +112,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page1Opening onNext={() => setCurrentStep('page_2_playful')} />
                 </motion.div>
@@ -118,8 +125,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page2Playful onNext={() => setCurrentStep('page_3_memories')} />
                 </motion.div>
@@ -131,8 +138,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page3Memories onNext={() => setCurrentStep('page_4_honest')} />
                 </motion.div>
@@ -144,8 +151,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page4Honest onNext={() => setCurrentStep('page_5_forgiveness')} />
                 </motion.div>
@@ -157,8 +164,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page5Forgiveness onNext={() => setCurrentStep('page_6_rose')} />
                 </motion.div>
@@ -170,8 +177,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page6Rose onNext={() => setCurrentStep('page_7_photo')} />
                 </motion.div>
@@ -183,8 +190,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page7Photo onNext={() => setCurrentStep('page_8_movie')} />
                 </motion.div>
@@ -196,8 +203,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, x: 24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <Page8MoviePlan onNext={() => setCurrentStep('final_screenshot')} />
                 </motion.div>
@@ -209,8 +216,8 @@ export const App: React.FC = () => {
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full"
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex-1 min-h-0 flex flex-col overflow-hidden"
                 >
                   <PageFinalScreenshot onRestart={handleRestart} />
                 </motion.div>
